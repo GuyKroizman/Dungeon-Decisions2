@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 26739a05baa9c3b4a885951a4bd339b3
+timeCreated: 1509399835
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - maze: {instanceID: 0}
+  - floor: {fileID: 1381143838520570, guid: 35bca9ae6e678e64ca9e7d24825a715f, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

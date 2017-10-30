@@ -70,7 +70,7 @@ public class Maze : MonoBehaviour {
         }
     }
 
-    void Start () {
+    void Awake () {
         
         Vector3 floorSize = floor.transform.localScale;
 
@@ -82,11 +82,10 @@ public class Maze : MonoBehaviour {
         maxZ = floorSize.z / 2.0f;
 
         CreateMazeOuterWalls();
-
-        CreateMazeInnerLayout();
     }
 
-    private void CreateMazeInnerLayout()
+    // TODO: pass a variable holding the level
+    public void CreateMazeInnerLayoutForLevel()
     {
         int [,] layout = new int[,]
         {
@@ -132,7 +131,4 @@ public class Maze : MonoBehaviour {
         }
     }
 
-    void Update () {
-	
-	}
 }
