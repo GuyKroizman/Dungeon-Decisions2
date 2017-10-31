@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour {
     // Singleton
     public static GameManager instance = null;
 
+    // when this (GameManager) is instantiated from Loader, the maze also gets instantiated.
     public Maze maze;
 
     public GameObject floor;
@@ -22,24 +23,14 @@ public class GameManager : MonoBehaviour {
         } else if (instance != null)
         {
             Destroy(gameObject);
+            return;
         }
 
         DontDestroyOnLoad(gameObject);
 
         floorClone = Instantiate(floor);
 
-        maze = GetComponent<Maze>();
-
-        InitGame();
-	}
-
-    private void InitGame()
-    {
         maze.CreateMazeInnerLayoutForLevel();
     }
-
-    // Update is called once per frame
-    void Update () {
-		
-	}
+    
 }

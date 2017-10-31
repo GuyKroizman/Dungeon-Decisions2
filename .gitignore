@@ -28,3 +28,4 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+/.vs/Dungeon-Decisions2/v15/Server/sqlite3

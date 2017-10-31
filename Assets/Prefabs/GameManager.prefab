@@ -65,5 +65,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26739a05baa9c3b4a885951a4bd339b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maze: {fileID: 0}
-  floor: {fileID: 0}
+  maze: {fileID: 114358843100244060, guid: 43b069fa056a83343b58a763bd617536, type: 2}
+  floor: {fileID: 1381143838520570, guid: 35bca9ae6e678e64ca9e7d24825a715f, type: 2}
