@@ -6,7 +6,7 @@ public class Maze : MonoBehaviour {
     public GameObject brick;
 
     // floor is expected to be a square shape.
-    public GameObject floor;
+    private GameObject floor;
 
     float minX;
     float maxX;
@@ -35,6 +35,11 @@ public class Maze : MonoBehaviour {
         BuildWestWallSkipFirstBlockWhichIsPartOfNorthWall();
         BuildSouthWallSkipFirstBlockWhichIsPartOfWestWall();
         BuildEastWallSkipFirstAndLastBricksWhichAlreadyBuilt();
+    }
+
+    internal void setFloor(GameObject floorClone)
+    {
+        floor = floorClone;
     }
 
     private void BuildEastWallSkipFirstAndLastBricksWhichAlreadyBuilt()
@@ -69,7 +74,7 @@ public class Maze : MonoBehaviour {
         }
     }
 
-    void Awake () {
+    public void Init () {
         
         Vector3 floorSize = floor.transform.localScale;
 

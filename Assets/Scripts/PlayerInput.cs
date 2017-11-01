@@ -8,11 +8,11 @@ public class PlayerInput : MonoBehaviour {
     public KeyCode rightKey;
     public KeyCode forwardKey;
 
-    private Player player;
+    public Player player;
 
     // Use this for initialization
     void Start () {
-        player = Camera.main.GetComponent<Player>();
+        //player = GetComponent<Player>();
     }
 	
 	// Update is called once per frame
