@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class Player : MonoBehaviour {
 
-    Rigidbody rigidbody;
+    Rigidbody m_rigidbody;
+
     void Start () {
-        rigidbody = GetComponent<Rigidbody>();
+        m_rigidbody = GetComponent<Rigidbody>();
     }
 	
 	// Update is called once per frame
@@ -19,7 +20,7 @@ public class Player : MonoBehaviour {
         
         if (asdf == 0)
         {
-            rigidbody.AddForce(transform.forward * 10);
+            m_rigidbody.AddForce(transform.forward * 10);
         }
             //MoveForward();
 
