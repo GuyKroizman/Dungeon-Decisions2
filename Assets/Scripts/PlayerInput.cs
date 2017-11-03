@@ -14,21 +14,25 @@ public class PlayerInput : MonoBehaviour {
     void Start () {
         //player = GetComponent<Player>();
     }
+
+    int getDirection()
+    {
+        if (Input.GetKeyDown(leftKey))
+            return 1;
+
+        if (Input.GetKeyDown(rightKey))
+            return 2;
+
+        if (Input.GetKeyDown(forwardKey))
+            return 0;
+
+        return -1;
+    }
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetKeyDown(leftKey))
-        {
-            player.move(1);
-        }
-        if (Input.GetKeyDown(rightKey))
-        {
-            player.move(2);
-        }
+        int direction = getDirection();
+        player.move(direction);
 
-        if (Input.GetKeyDown(forwardKey))
-        {
-            player.move(0);
-        }
     }
 }
