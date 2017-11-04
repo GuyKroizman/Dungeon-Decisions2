@@ -3,15 +3,15 @@ using UnityEngine;
 
 public class Maze : MonoBehaviour {
 
+    // bricks are initiated one next to another to create the maze wall.
     public GameObject brick;
 
     // floor is expected to be a square shape.
     private GameObject floor;
 
-    float minX;
-    float maxX;
-    float minZ;
-    float maxZ;
+    // the dimension of the the maze/floor
+    float minX, maxX;
+    float minZ, maxZ;
 
     void PutBrick(float x, float z)
     {

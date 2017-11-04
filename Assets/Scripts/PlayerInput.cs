@@ -4,16 +4,12 @@ using UnityEngine;
 
 public class PlayerInput : MonoBehaviour {
 
+    // The keys assigned for this player movment
     public KeyCode leftKey;
     public KeyCode rightKey;
     public KeyCode forwardKey;
 
     public Player player;
-
-    // Use this for initialization
-    void Start () {
-        //player = GetComponent<Player>();
-    }
 
     int getDirection()
     {
@@ -32,7 +28,7 @@ public class PlayerInput : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         int direction = getDirection();
-        player.move(direction);
+        player.Move(direction);
 
     }
 }

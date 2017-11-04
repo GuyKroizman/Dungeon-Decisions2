@@ -6,37 +6,34 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
 
-  
-    
-    class TurnInfo
+    /// <summary>
+    /// Hold the state of the rotation.
+    /// Does the math using regular degrees and provide the quaternion.
+    /// </summary>    
+    class Direction
     {
-        private float rotation = 0.0f;
-        private Quaternion m_RotateDestinationQuaternion = Quaternion.identity;
+        private float directionDegrees = 0.0f;
+        private Quaternion directionQuaternion = Quaternion.identity;
 
-        public void TurnRight()
+        internal void TurnRight()
         {
-            rotation += 90.0f;
-            m_RotateDestinationQuaternion = Quaternion.Euler(0.0f, rotation, 0.0f);
+            directionDegrees += 90.0f;
+            directionQuaternion = Quaternion.Euler(0.0f, directionDegrees, 0.0f);
         }
 
-        public void TurnLeft()
+        internal void TurnLeft()
         {
-            rotation -= 90.0f;
-            m_RotateDestinationQuaternion = Quaternion.Euler(0.0f, rotation, 0.0f);
+            directionDegrees -= 90.0f;
+            directionQuaternion = Quaternion.Euler(0.0f, directionDegrees, 0.0f);
         }
 
-        internal Quaternion getTurnDestination()
+        internal Quaternion getDirection()
         {
-            return m_RotateDestinationQuaternion;
-        }
-
-        internal float getTurningSpeed()
-        {
-            return 175;
+            return directionQuaternion;
         }
     }
 
-    TurnInfo m_TurnInfo;
+    Direction m_direction;
 
     Rigidbody m_rigidbody;
 
@@ -44,36 +41,49 @@ public class Player : MonoBehaviour
     {
         m_rigidbody = GetComponent<Rigidbody>();
 
-        m_TurnInfo = new TurnInfo();
+        m_direction = new Direction();
     }
 
     // Update is called once per frame
     void Update()
     {
-        RotateToDestination(m_TurnInfo.getTurnDestination(), m_TurnInfo.getTurningSpeed());
+        float turningSpeed = 175.0f;
+        RotateToDestination(m_direction.getDirection(), turningSpeed);
     }
 
+    /// <summary>
+    /// Rotate the current player in the direction provided, using the speed provided
+    /// </summary>
+    /// <param name="rotateDestinationQuaternion">The direction to turn to</param>
+    /// <param name="turnSpeed">The turning speed</param>
     private void RotateToDestination(Quaternion rotateDestinationQuaternion, float turnSpeed)
     {
         transform.rotation = Quaternion.RotateTowards(transform.rotation, rotateDestinationQuaternion, turnSpeed * Time.deltaTime);
     }
 
-    public void move(int asdf)
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="direction">
+    /// 0 is for direction forward
+    /// 1 is for directino turn left
+    /// 2 is for direction turn right
+    /// </param>
+    public void Move(int direction)
     {
-        if (asdf == 0)
+        if (direction == 0)
         {
             m_rigidbody.AddForce(transform.forward * 10);
         }
 
-
-        if (asdf == 1)
+        if (direction == 1)
         {
-            m_TurnInfo.TurnLeft();                      
+            m_direction.TurnLeft();                      
         }
 
-        if (asdf == 2)
+        if (direction == 2)
         {
-            m_TurnInfo.TurnRight();            
+            m_direction.TurnRight();            
         }
 
         
