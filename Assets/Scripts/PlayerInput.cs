@@ -9,7 +9,7 @@ public class PlayerInput : MonoBehaviour {
     public KeyCode rightKey;
     public KeyCode forwardKey;
 
-    public Player player;
+    public Player m_player;
 
     int getDirection()
     {
@@ -28,7 +28,7 @@ public class PlayerInput : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         int direction = getDirection();
-        player.Move(direction);
+        m_player.Move(direction);
 
     }
 }
