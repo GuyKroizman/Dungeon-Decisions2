@@ -33,15 +33,76 @@ public class Player : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Move one step forward.
+    /// Once start() is called the initial position is stored and the object change state so that
+    /// each update will move the player one step
+    /// </summary>
+    class MoveForward
+    {
+        bool m_moveNow = false;
+        private Vector3 m_initial_position;
+        private Transform m_transform;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="transform">The player's position</param>
+        public MoveForward(Transform transform)
+        {
+            m_transform = transform;
+        }
+
+        /// <summary>
+        /// Change the object state so that Update() moves it forward until a distance of one step is traveled
+        /// </summary>
+        public void Start()
+        {
+            m_moveNow = true;
+            m_initial_position = m_transform.position;
+        }
+
+        /// <summary>
+        /// if in move state - Move forward until a distance of one step is traveled.
+        /// </summary>
+        public void Update()
+        {
+            if (IsTraveledCompleteStepSinceStart())
+                m_moveNow = false;
+
+            if (m_moveNow)
+                MoveStep();
+        }
+
+        // move one step forward
+        private void MoveStep()
+        {
+            m_transform.Translate(Vector3.forward * Time.deltaTime);
+        }
+
+        // is distance from initial position > 1 (that is one step)
+        private bool IsTraveledCompleteStepSinceStart()
+        {
+            float distanceFromInitialPosition = Vector3.Distance(m_initial_position, m_transform.position);
+            return distanceFromInitialPosition > 1;            
+        }
+
+        
+    }
+
     Direction m_direction;
 
     Rigidbody m_rigidbody;
+
+    MoveForward m_move_forward;
 
     void Start()
     {
         m_rigidbody = GetComponent<Rigidbody>();
 
         m_direction = new Direction();
+
+        m_move_forward = new MoveForward(m_rigidbody.transform);
     }
 
     // Update is called once per frame
@@ -49,6 +110,8 @@ public class Player : MonoBehaviour
     {
         float turningSpeed = 175.0f;
         RotateToDestination(m_direction.getDirection(), turningSpeed);
+
+        m_move_forward.Update();
     }
 
     /// <summary>
@@ -73,7 +136,7 @@ public class Player : MonoBehaviour
     {
         if (direction == 0)
         {
-            m_rigidbody.AddForce(transform.forward * 10);
+            m_move_forward.Start();
         }
 
         if (direction == 1)
