@@ -41,7 +41,7 @@ public class Player : MonoBehaviour
     class MoveForward
     {
         bool m_moveNow = false;
-        private Vector3 m_initial_position;
+        private Vector3 m_initialPosition;
         private Transform m_transform;
 
         /// <summary>
@@ -59,7 +59,7 @@ public class Player : MonoBehaviour
         public void Start()
         {
             m_moveNow = true;
-            m_initial_position = m_transform.position;
+            m_initialPosition = m_transform.position;
         }
 
         /// <summary>
@@ -67,11 +67,15 @@ public class Player : MonoBehaviour
         /// </summary>
         public void Update()
         {
+
             if (IsTraveledCompleteStepSinceStart())
                 m_moveNow = false;
 
             if (m_moveNow)
-                MoveStep();
+            {
+                MoveStep();                
+            }
+                
         }
 
         // move one step forward
@@ -80,10 +84,10 @@ public class Player : MonoBehaviour
             m_transform.Translate(Vector3.forward * Time.deltaTime);
         }
 
-        // is distance from initial position > 1 (that is one step)
+        // is distance from initial position is one step
         private bool IsTraveledCompleteStepSinceStart()
         {
-            float distanceFromInitialPosition = Vector3.Distance(m_initial_position, m_transform.position);
+            float distanceFromInitialPosition = Vector3.Distance(m_initialPosition, m_transform.position);
             return distanceFromInitialPosition > 1;            
         }
 
@@ -95,6 +99,7 @@ public class Player : MonoBehaviour
     Rigidbody m_rigidbody;
 
     MoveForward m_move_forward;
+
 
     void Start()
     {
@@ -136,7 +141,8 @@ public class Player : MonoBehaviour
     {
         if (direction == 0)
         {
-            m_move_forward.Start();
+            if(!IsThereAWallAhead())
+                m_move_forward.Start();
         }
 
         if (direction == 1)
@@ -147,9 +153,13 @@ public class Player : MonoBehaviour
         if (direction == 2)
         {
             m_direction.TurnRight();            
-        }
+        }        
+    }
 
-        
+    private bool IsThereAWallAhead()
+    {
+        RaycastHit hit;
+        return Physics.Raycast(transform.position, Camera.main.transform.forward, out hit, 0.5f);
     }
 
 

@@ -13,14 +13,10 @@ public class PlayerTouchInput : MonoBehaviour {
     public Player m_player;
 
 
-    // Use this for initialization
-    void Start () {        
-		
-	}
+
 	
-	// Update is called once per frame
 	void Update () {
-        Debug.Log("mouse position " + Input.mousePosition + "   r button " + m_buttonRight.transform.position);
+        
         if (Input.GetMouseButtonUp(0))
         {
             GameObject clickedButton = GetButtonClicked(Input.mousePosition.x, Input.mousePosition.y);
