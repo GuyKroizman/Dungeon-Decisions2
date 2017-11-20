@@ -56,7 +56,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: f1932aa464b58934dac487703c808521, type: 2}
+  - {fileID: 2100000, guid: 77cb4294866330f49b1ac64454c2cb6a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -88,13 +88,13 @@ Rigidbody:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000010391974664}
   serializedVersion: 2
-  m_Mass: 9999
-  m_Drag: 9999
-  m_AngularDrag: 0.05
+  m_Mass: 500
+  m_Drag: 0
+  m_AngularDrag: 0
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 122
   m_CollisionDetection: 0
 --- !u!65 &65000011997806460
 BoxCollider:

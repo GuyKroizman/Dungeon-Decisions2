@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Threading;
 using UnityEngine;
 
 public class Maze : MonoBehaviour {
@@ -24,9 +26,11 @@ public class Maze : MonoBehaviour {
         if (z > maxZ)
             return;
 
+        float BrickInstantiationHeight = 5;
+
         x += brick.transform.localScale.x / 2;
         z += brick.transform.localScale.z / 2;
-        Instantiate(brick, new Vector3(x, 1, z), Quaternion.identity);
+        Instantiate(brick, new Vector3(x, BrickInstantiationHeight, z), Quaternion.identity);
     }
 
     void CreateMazeOuterWalls()
@@ -37,7 +41,7 @@ public class Maze : MonoBehaviour {
         BuildEastWallSkipFirstAndLastBricksWhichAlreadyBuilt();
     }
 
-    internal void setFloor(GameObject floorClone)
+    internal void SetFloor(GameObject floorClone)
     {
         floor = floorClone;
     }
@@ -89,7 +93,7 @@ public class Maze : MonoBehaviour {
     }
 
     // TODO: pass a variable holding the level
-    public void CreateMazeInnerLayoutForLevel()
+    public IEnumerator CreateMazeInnerLayoutForLevel()
     {
         
         int [,] layout = new int[,]
@@ -130,8 +134,12 @@ public class Maze : MonoBehaviour {
                 if (z + Math.Abs(minZ) > layout.GetLength(1))
                     continue;
 
-                if(layout[x + (int)Math.Abs(minX), z+(int)Math.Abs(minZ)] == 1)
+                if (layout[x + (int)Math.Abs(minX), z + (int)Math.Abs(minZ)] == 1)
+                {
                     PutBrick(x, z);
+                    yield return new WaitForSeconds(0.3f);
+                }
+                
             }
         }
     }

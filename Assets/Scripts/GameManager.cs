@@ -29,13 +29,16 @@ public class GameManager : MonoBehaviour {
 
         floorClone = Instantiate(floor);
 
-        maze.setFloor(floorClone);
+        maze = Instantiate(maze);
+
+        maze.SetFloor(floorClone);
         maze.Init();
     }
 
     private void Start()
     {
-        maze.CreateMazeInnerLayoutForLevel();
+        StartCoroutine(maze.CreateMazeInnerLayoutForLevel());
     }
+    
 
 }

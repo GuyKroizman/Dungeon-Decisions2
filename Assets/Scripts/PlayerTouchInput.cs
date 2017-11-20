@@ -16,7 +16,7 @@ public class PlayerTouchInput : MonoBehaviour {
 
 	
 	void Update () {
-        
+
         if (Input.GetMouseButtonUp(0))
         {
             GameObject clickedButton = GetButtonClicked(Input.mousePosition.x, Input.mousePosition.y);
@@ -33,25 +33,33 @@ public class PlayerTouchInput : MonoBehaviour {
 
     }
 
+    /// <summary>
+    /// Check if in the given x,y there is one of the buttons and return it
+    /// </summary>
+    /// <param name="x">x coord</param>
+    /// <param name="y">y coord</param>
+    /// <returns>The button in x,y or null</returns>
     private GameObject GetButtonClicked(float x, float y)
     {
-        if (IsButtonCollition(x, y, m_buttonLeft))
+        if (IsButtonCollision(x, y, m_buttonLeft))
             return m_buttonLeft;
 
-        if (IsButtonCollition(x, y, m_buttonRight))
+        if (IsButtonCollision(x, y, m_buttonRight))
             return m_buttonRight;
 
-        if (IsButtonCollition(x, y, m_buttonUp))
+        if (IsButtonCollision(x, y, m_buttonUp))
             return m_buttonUp;
 
         return null;
     }
 
-    private bool IsButtonCollition(float x, float y, GameObject button)
+    private bool IsButtonCollision(float x, float y, GameObject button)
     {
-        float buttonWidth = 100f;
-        float buttonHeight = 100f;
-        float test = button.transform.GetComponent<RectTransform>().sizeDelta.x;
+        Canvas canvas = GetComponentInParent<Canvas>();
+        RectTransform rectTransform = button.transform.GetComponent<RectTransform>();
+        float buttonWidth = rectTransform.sizeDelta.x * canvas.scaleFactor;
+        float buttonHeight = rectTransform.sizeDelta.y * canvas.scaleFactor;
+
 
         if (button.transform.position.x > x && 
             button.transform.position.x - buttonWidth < x  &&
