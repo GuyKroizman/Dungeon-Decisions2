@@ -10,9 +10,9 @@ public class PlayerTouchInput : MonoBehaviour {
     public GameObject m_buttonRight;
     public GameObject m_buttonLeft;
 
-    public Player m_player;
+    public bool m_isPlayerOne;
 
-
+    public DecisionMaster m_decisionMaster;
 
 	
 	void Update () {
@@ -21,14 +21,14 @@ public class PlayerTouchInput : MonoBehaviour {
         {
             GameObject clickedButton = GetButtonClicked(Input.mousePosition.x, Input.mousePosition.y);
             int direction = GetDirection(clickedButton);
-            m_player.Move(direction);
+            m_decisionMaster.Move(m_isPlayerOne?1:2, direction);
         }
 
         foreach (Touch touch in Input.touches)
         {
             GameObject clickedButton = GetButtonClicked(touch.position.x, touch.position.y);
             int direction = GetDirection(clickedButton);
-            m_player.Move(direction);
+            m_decisionMaster.Move(m_isPlayerOne ? 1 : 2, direction);
         }
 
     }
