@@ -51,5 +51,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab030798f67846f4f864229a1e90b718, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  brick: {fileID: 1000010391974664, guid: 439d9ad1d000887408ad1a875314586a, type: 2}
-  floor: {fileID: 1381143838520570, guid: 35bca9ae6e678e64ca9e7d24825a715f, type: 2}
+  m_brick: {fileID: 1000010391974664, guid: 439d9ad1d000887408ad1a875314586a, type: 2}

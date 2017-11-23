@@ -6,10 +6,10 @@ using UnityEngine;
 public class Maze : MonoBehaviour {
 
     // bricks are initiated one next to another to create the maze wall.
-    public GameObject brick;
+    public GameObject m_brick;
 
     // floor is expected to be a square shape.
-    private GameObject floor;
+    private GameObject m_floor;
 
     // the dimension of the the maze/floor
     float minX, maxX;
@@ -28,9 +28,9 @@ public class Maze : MonoBehaviour {
 
         float BrickInstantiationHeight = 5;
 
-        x += brick.transform.localScale.x / 2;
-        z += brick.transform.localScale.z / 2;
-        Instantiate(brick, new Vector3(x, BrickInstantiationHeight, z), Quaternion.identity);
+        x += m_brick.transform.localScale.x / 2;
+        z += m_brick.transform.localScale.z / 2;
+        Instantiate(m_brick, new Vector3(x, BrickInstantiationHeight, z), Quaternion.identity);
     }
 
     void CreateMazeOuterWalls()
@@ -43,7 +43,7 @@ public class Maze : MonoBehaviour {
 
     internal void SetFloor(GameObject floorClone)
     {
-        floor = floorClone;
+        m_floor = floorClone;
     }
 
     private void BuildEastWallSkipFirstAndLastBricksWhichAlreadyBuilt()
@@ -80,7 +80,7 @@ public class Maze : MonoBehaviour {
 
     public void Init () {
         
-        Vector3 floorSize = floor.transform.localScale;
+        Vector3 floorSize = m_floor.transform.localScale;
 
         // the center of the floor is 0,0 (and not some corner as some might expect)
         minX = -1.0f * floorSize.x / 2.0f;

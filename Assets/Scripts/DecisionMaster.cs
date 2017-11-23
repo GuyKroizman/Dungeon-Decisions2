@@ -11,16 +11,21 @@ public class DecisionMaster : MonoBehaviour {
     private int m_user1DirectionDecision = -1;
     private int m_user2DirectionDecision = -1;
 
-    private float timer = 0;
+    private float m_timer = 0;
+
+    // the time the movment takes?
+    private const float IN_MOVMENT_DURATION = 1.0f;
+    private float m_inMovmentTimer;
     
 	// Update is called once per frame
 	void Update () {
-        timer += Time.deltaTime;
+        m_timer += Time.deltaTime;
+        m_inMovmentTimer -= Time.deltaTime;
 
-        Debug.Log("Decision Master timer: " + timer + " user1: " + m_user1DirectionDecision + " user2: " + m_user2DirectionDecision);
+        Debug.Log("Decision Master timer: " + m_timer + " user1: " + m_user1DirectionDecision + " user2: " + m_user2DirectionDecision);
 
         // if time is up.
-        if(timer > m_usersTurnDuration)
+        if(m_timer > m_usersTurnDuration)
         {
             // TODO: kill timer?
 
@@ -28,11 +33,13 @@ public class DecisionMaster : MonoBehaviour {
             MovePlayerToRandomDirection();
 
             // TODO: adjust to the m_usersTurnDuration + the time it took to make the movment. timer = -0.4?
-            timer = 0;
+            m_timer = 0;
             m_user1DirectionDecision = -1;
             m_user2DirectionDecision = -1;
 
             // TODO: create new timer once movment finished.
+
+            m_inMovmentTimer = IN_MOVMENT_DURATION;
 
         }
 
@@ -47,11 +54,13 @@ public class DecisionMaster : MonoBehaviour {
             }
 
             // TODO: adjust to the m_usersTurnDuration + the time it took to make the movment. timer = -0.4?
-            timer = 0;
+            m_timer = 0;
             m_user1DirectionDecision = -1;
             m_user2DirectionDecision = -1;
 
             // TODO: create new timer once movment finished.
+
+            m_inMovmentTimer = IN_MOVMENT_DURATION;
         }
     }
 
@@ -68,6 +77,12 @@ public class DecisionMaster : MonoBehaviour {
     internal void Move(int userIndex, int direction)
     {
         if (direction == -1)
+            return;
+
+
+        // prevent from setting the move direction again from the same touch. 
+        // TODO: if that works refactor and document
+        if (m_inMovmentTimer > 0)
             return;
 
         if (userIndex == 1)

@@ -10,27 +10,48 @@ public class PlayerTouchInput : MonoBehaviour {
     public GameObject m_buttonRight;
     public GameObject m_buttonLeft;
 
+    // The game is for two players/users. we have a set of directional buttons for each player
+    // this flag determine whether the set of buttons is for player one or two.
     public bool m_isPlayerOne;
+
+    // for convinience - change the bool from above to an int with value 1 for player one and 2 for player two.
+    private int m_userIndex;
 
     public DecisionMaster m_decisionMaster;
 
-	
-	void Update () {
+    private void Start()
+    {
+        m_userIndex = m_isPlayerOne ? 1 : 2;
+    }
 
+    void Update () {
+        
         if (Input.GetMouseButtonUp(0))
         {
-            GameObject clickedButton = GetButtonClicked(Input.mousePosition.x, Input.mousePosition.y);
-            int direction = GetDirection(clickedButton);
-            m_decisionMaster.Move(m_isPlayerOne?1:2, direction);
+            float x = Input.mousePosition.x;
+            float y = Input.mousePosition.y;
+
+            m_decisionMaster.Move(m_userIndex, GetDirectionOfButtonAt(x, y));
         }
 
         foreach (Touch touch in Input.touches)
         {
-            GameObject clickedButton = GetButtonClicked(touch.position.x, touch.position.y);
-            int direction = GetDirection(clickedButton);
-            m_decisionMaster.Move(m_isPlayerOne ? 1 : 2, direction);
+            if (touch.phase != TouchPhase.Stationary)
+                continue;
+
+            float x = touch.position.x;
+            float y = touch.position.y;
+
+            m_decisionMaster.Move(m_userIndex, GetDirectionOfButtonAt(x, y));
         }
 
+    }
+
+    private int GetDirectionOfButtonAt(float x, float y)
+    {
+        GameObject clickedButton = GetButtonClicked(x, y);
+        int direction = GetDirection(clickedButton);
+        return direction;
     }
 
     /// <summary>
