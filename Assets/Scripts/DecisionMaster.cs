@@ -8,87 +8,127 @@ public class DecisionMaster : MonoBehaviour {
     public Player m_player;
     public float m_usersTurnDuration;
 
-    private int m_user1DirectionDecision = -1;
-    private int m_user2DirectionDecision = -1;
+    BallotBox m_ballotBox;
 
     private float m_timer = 0;
+       
 
-    // the time the movment takes?
-    private const float IN_MOVMENT_DURATION = 1.0f;
-    private float m_inMovmentTimer;
-    
-	// Update is called once per frame
-	void Update () {
+    class BallotBox
+    {
+        private int m_user1DirectionDecision;
+        private int m_user2DirectionDecision;
+
+        // the time the movement takes?
+        private const float IN_MOVMENT_DURATION = 1.0f;
+
+        private float m_inMovmentTimer;
+
+        public BallotBox()
+        {
+            Reset();
+        }
+
+        public void Reset()
+        {
+            m_user1DirectionDecision = -1;
+            m_user2DirectionDecision = -1;
+
+            m_inMovmentTimer = IN_MOVMENT_DURATION;
+        }
+
+        public void UpdateTime()
+        {
+            m_inMovmentTimer -= Time.deltaTime;
+        }
+
+        public bool IsTwoUsersVotedToMoveInTheSameDirection()
+        {
+            return m_user2DirectionDecision == m_user1DirectionDecision;
+        }
+
+        public int GetFinalDirection()
+        {
+            if( IsTwoUsersVotedToMoveInTheSameDirection())
+                return m_user1DirectionDecision;
+
+            return -1;
+        }
+
+        public bool IsBothUsersHaveAlreadyDecided()
+        {
+            return m_user1DirectionDecision != -1 && m_user2DirectionDecision != -1;
+        }
+
+        internal void SetUserDirectionVote(int userIndex, int direction)
+        {
+            // prevent from setting the move direction again from the same touch.             
+            if (m_inMovmentTimer > 0)
+                return;
+
+            if (userIndex == 1)
+                m_user1DirectionDecision = direction;
+
+            if (userIndex == 2)
+                m_user2DirectionDecision = direction;
+        }
+    }
+
+    private void Start()
+    {
+        m_ballotBox = new BallotBox();
+    }
+
+    // Update is called once per frame
+    void Update () {
         m_timer += Time.deltaTime;
-        m_inMovmentTimer -= Time.deltaTime;
-
-        Debug.Log("Decision Master timer: " + m_timer + " user1: " + m_user1DirectionDecision + " user2: " + m_user2DirectionDecision);
+        m_ballotBox.UpdateTime();
 
         // if time is up.
         if(m_timer > m_usersTurnDuration)
         {
-            // TODO: kill timer?
+            // time is up and users did not decide anything or only one of the users decided.
+            MovePlayer(GetRandomDirection());
 
-            // time is up and users did not decide anything or only one of the decided.
-            MovePlayerToRandomDirection();
-
-            // TODO: adjust to the m_usersTurnDuration + the time it took to make the movment. timer = -0.4?
-            m_timer = 0;
-            m_user1DirectionDecision = -1;
-            m_user2DirectionDecision = -1;
-
-            // TODO: create new timer once movment finished.
-
-            m_inMovmentTimer = IN_MOVMENT_DURATION;
+            // TODO: adjust to the m_usersTurnDuration + the time it took to make the movement. timer = -0.4?
 
         }
 
-        if (IsBothUsersHaveAlreadyDecided())
+        if (m_ballotBox.IsBothUsersHaveAlreadyDecided())
         {
-            // TODO: kill timer
-            if (m_user2DirectionDecision == m_user1DirectionDecision)
-                m_player.Move(m_user1DirectionDecision);
+            
+            if (m_ballotBox.IsTwoUsersVotedToMoveInTheSameDirection())
+                MovePlayer(m_ballotBox.GetFinalDirection());
             else
             {
-                MovePlayerToRandomDirection();
+                MovePlayer(GetRandomDirection());
             }
 
-            // TODO: adjust to the m_usersTurnDuration + the time it took to make the movment. timer = -0.4?
-            m_timer = 0;
-            m_user1DirectionDecision = -1;
-            m_user2DirectionDecision = -1;
+            // TODO: adjust to the m_usersTurnDuration + the time it took to make the movement. timer = -0.4?
 
-            // TODO: create new timer once movment finished.
 
-            m_inMovmentTimer = IN_MOVMENT_DURATION;
         }
     }
 
-    private void MovePlayerToRandomDirection()
+    private void MovePlayer(int direction)
     {
-        m_player.Move(UnityEngine.Random.Range(0, 3));
+        // TODO: kill ui timer
+        m_player.Move(direction);
+
+        m_timer = 0;
+        m_ballotBox.Reset();
     }
 
-    private bool IsBothUsersHaveAlreadyDecided()
+    /// <summary>
+    /// Return a random direction number. That is either a 0,1 or 2
+    /// </summary>
+    /// <returns>number 0,1 or 2</returns>
+    private int GetRandomDirection()
     {
-        return m_user1DirectionDecision != -1 && m_user2DirectionDecision != -1;
+        return UnityEngine.Random.Range(0, 3);
     }
 
     internal void Move(int userIndex, int direction)
-    {
-        if (direction == -1)
-            return;
-
-
-        // prevent from setting the move direction again from the same touch. 
-        // TODO: if that works refactor and document
-        if (m_inMovmentTimer > 0)
-            return;
-
-        if (userIndex == 1)
-            m_user1DirectionDecision = direction;
-
-        if (userIndex == 2)
-            m_user2DirectionDecision = direction;
+    {        
+        m_ballotBox.SetUserDirectionVote(userIndex, direction);
     }
 }

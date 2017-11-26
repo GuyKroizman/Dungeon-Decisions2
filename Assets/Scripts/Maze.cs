@@ -11,10 +11,15 @@ public class Maze : MonoBehaviour {
     // floor is expected to be a square shape.
     private GameObject m_floor;
 
-    // the dimension of the the maze/floor
+    // the dimension of the maze/floor
     float minX, maxX;
     float minZ, maxZ;
 
+    /// <summary>
+    /// Initiate a brick somewhere above the floor in x,z coords
+    /// </summary>
+    /// <param name="x">x</param>
+    /// <param name="z">z</param>
     void PutBrick(float x, float z)
     {
         if (x < minX)
@@ -33,6 +38,9 @@ public class Maze : MonoBehaviour {
         Instantiate(m_brick, new Vector3(x, BrickInstantiationHeight, z), Quaternion.identity);
     }
 
+    /// <summary>
+    /// Create the walls (out of bricks) around the edges of the floor.
+    /// </summary>
     void CreateMazeOuterWalls()
     {
         BuildNorthWall();

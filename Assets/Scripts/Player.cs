@@ -3,6 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Representing the character in the maze.
+/// Receive call to Move the player character.
+/// </summary>
 public class Player : MonoBehaviour
 {
 
@@ -105,9 +109,9 @@ public class Player : MonoBehaviour
     {
         m_rigidbody = GetComponent<Rigidbody>();
 
-        m_direction = new Direction();
-
         m_move_forward = new MoveForward(m_rigidbody.transform);
+
+        m_direction = new Direction();        
     }
 
     // Update is called once per frame
@@ -130,11 +134,14 @@ public class Player : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    /// Gets called from the decision master with the command to 
+    /// Move the player either forward or turn the player 90 degree left or right; Then
+    /// set the internal state of the class to move appropriately which will be carried out
+    /// by the Update function.
     /// </summary>
     /// <param name="direction">
     /// 0 is for direction forward
-    /// 1 is for directino turn left
+    /// 1 is for direction turn left
     /// 2 is for direction turn right
     /// </param>
     public void Move(int direction)

@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class Brick : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
+	void Start ()
+    {
+        SetBrickRandomColor();
+    }
+
+    private void SetBrickRandomColor()
+    {
         Renderer rend = GetComponent<Renderer>();
 
         rend.material.color = Random.ColorHSV();
     }
-
-
 }
