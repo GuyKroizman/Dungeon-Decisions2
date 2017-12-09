@@ -12,7 +12,9 @@ public class DecisionMaster : MonoBehaviour {
 
     private float m_timer = 0;
        
-
+    /// <summary>
+    /// Collects users direction votes and provide the results
+    /// </summary>
     class BallotBox
     {
         private int m_user1DirectionDecision;
