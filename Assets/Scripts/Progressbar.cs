@@ -6,12 +6,15 @@ public class Progressbar : MonoBehaviour {
 
 
     public GameObject m_part;
+    public float m_timeSeconds;
+
+    public int m_rowCount = 3;
+    public int m_columnCount = 40;
 
     private Transform m_componentTransform;
-    public float m_timeSeconds;
+    
     private float m_partWidth;
-    private float m_canvasScaleFactor;
-
+    
     /// <summary>
     /// Generator to produce sorted floats in a range. 
     /// That is, each time it will produce a float in the range that is smaller than the previous one
@@ -38,32 +41,42 @@ public class Progressbar : MonoBehaviour {
 
     }
 
-    void Start () {
+    void Start ()
+    {
 
         m_componentTransform = GetComponent<Transform>();
-        m_partWidth= m_part.GetComponent<RectTransform>().sizeDelta.x;
-        Canvas canvas = GetComponentInParent<Canvas>();
-        m_canvasScaleFactor = canvas.scaleFactor;
 
-        const int RowCount = 3;
-        const int ColumnCount = 40;
+        m_partWidth = GetPartPrefabSize();
 
-        var enumerator = RandomDecendingFloatGenerator(RowCount * ColumnCount, 0, m_timeSeconds).GetEnumerator();
+        var enumerator = RandomDecendingFloatGenerator(m_rowCount * m_columnCount, 0, m_timeSeconds).GetEnumerator();
 
-        for (float i = 0; i < ColumnCount/2; i++)
-            for (float j = 0; j < RowCount; j++)
+        // divide column count by 2 because we need to do half the loops since in each iteration we create two particles.
+        // one to the right and one to the left.
+        for (float i = 0; i < m_columnCount / 2; i++)
+            for (float j = 0; j < m_rowCount; j++)
             {
                 var cubeRight = CreatePart(i, j);
-                enumerator.MoveNext();                
+                enumerator.MoveNext();
                 Destroy(cubeRight, enumerator.Current);
-                
 
                 var cubeLeft = CreatePart(-1 * i, j);
-                enumerator.MoveNext();                
+                enumerator.MoveNext();
                 Destroy(cubeLeft, enumerator.Current);
-                
+
             }
 
+    }
+
+    /// <summary>
+    /// Get the progress bar's particle's size
+    /// </summary>
+    /// <returns></returns>
+    private float GetPartPrefabSize()
+    {
+        Canvas canvas = GetComponentInParent<Canvas>();
+
+        // to get the particle size we get the x size from the prefab and then multiple it by the canvas scale factor.
+        return m_part.GetComponent<RectTransform>().sizeDelta.x * canvas.scaleFactor;
     }
 
     /// <summary>
@@ -74,8 +87,8 @@ public class Progressbar : MonoBehaviour {
     /// <returns>GameObject</returns>
     private GameObject CreatePart(float x, float z)
     {        
-        float h = x * m_partWidth * m_canvasScaleFactor;
-        float v = z * m_partWidth * m_canvasScaleFactor;
+        float h = x * m_partWidth;
+        float v = z * m_partWidth;
         return Instantiate(m_part,
             new Vector3(m_componentTransform.position.x + h, m_componentTransform.position.y + v, 0 ),
             Quaternion.identity,
