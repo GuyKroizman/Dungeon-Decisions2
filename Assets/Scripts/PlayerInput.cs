@@ -42,6 +42,9 @@ public class PlayerInput : MonoBehaviour {
     void Update ()
     {
         int direction = getDirection();
+        if (direction == -1)
+            return;
+
         m_decisionMaster.Move(m_userIndex, direction);
     }
 }

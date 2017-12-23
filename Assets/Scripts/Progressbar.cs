@@ -95,8 +95,8 @@ public class Progressbar : MonoBehaviour {
     /// <returns>GameObject</returns>
     private GameObject CreatePart(float x, float z)
     {        
-        float h = x * m_partWidth;
-        float v = z * m_partWidth;
+        float h = x * (m_partWidth + 3);
+        float v = z * (m_partWidth + 3);
         return Instantiate(m_part,
             new Vector3(m_componentTransform.position.x + h, m_componentTransform.position.y + v, 0 ),
             Quaternion.identity,

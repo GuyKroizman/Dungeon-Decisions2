@@ -3,10 +3,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Collects players vote for direction and move the player accordingly. 
+/// That is if the player voted for the same direction move to that direction. Otherwise
+/// random direction.
+/// Turn ended and players did not chose a direction -> move player in random direction
+/// 
+/// </summary>
 public class DecisionMaster : MonoBehaviour {
 
     public Player m_player;
-    public float m_usersTurnDuration;
+
+    // The time for each turn.
+    // TODO: Note There is also the time it takes for the player to do its movement (turn or forward). But we don't take 
+    // that into account in the logic below. need to be fixed.
+    public float m_usersTurnDurationSeconds;
 
     BallotBox m_ballotBox;
 
@@ -65,7 +76,10 @@ public class DecisionMaster : MonoBehaviour {
         {
             // prevent from setting the move direction again from the same touch.             
             if (m_inMovmentTimer > 0)
+            {
+                Debug.Log("Reject user direction vote because player is still moving.");
                 return;
+            }
 
             if (userIndex == 1)
                 m_user1DirectionDecision = direction;
@@ -80,40 +94,36 @@ public class DecisionMaster : MonoBehaviour {
         m_ballotBox = new BallotBox();
     }
 
-    // Update is called once per frame
     void Update () {
         m_timer += Time.deltaTime;
         m_ballotBox.UpdateTime();
 
         // if time is up.
-        if(m_timer > m_usersTurnDuration)
+        if(m_timer > m_usersTurnDurationSeconds)
         {
             // time is up and users did not decide anything or only one of the users decided.
             MovePlayer(GetRandomDirection());
-
-            // TODO: adjust to the m_usersTurnDuration + the time it took to make the movement. timer = -0.4?
-
+            Debug.Log("Time is up.");
         }
 
         if (m_ballotBox.IsBothUsersHaveAlreadyDecided())
         {
-            
+
             if (m_ballotBox.IsTwoUsersVotedToMoveInTheSameDirection())
+            {
                 MovePlayer(m_ballotBox.GetFinalDirection());
+                Debug.Log("Synergy!");
+            }
             else
             {
                 MovePlayer(GetRandomDirection());
+                Debug.Log("Indecision is your enemy.");
             }
-
-            // TODO: adjust to the m_usersTurnDuration + the time it took to make the movement. timer = -0.4?
-
-
         }
     }
 
     private void MovePlayer(int direction)
     {
-        // TODO: kill ui timer
         m_player.Move(direction);
 
         m_timer = 0;

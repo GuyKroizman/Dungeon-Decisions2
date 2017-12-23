@@ -325,7 +325,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 347892659
+  randomSeed: 1679254560
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -3290,7 +3290,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_player: {fileID: 1386148629}
-  m_usersTurnDuration: 6
+  m_usersTurnDurationSeconds: 4
 --- !u!4 &725190039
 Transform:
   m_ObjectHideFlags: 0

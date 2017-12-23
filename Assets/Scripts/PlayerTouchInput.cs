@@ -39,7 +39,11 @@ public class PlayerTouchInput : MonoBehaviour {
             float x = Input.mousePosition.x;
             float y = Input.mousePosition.y;
 
-            m_decisionMaster.Move(m_userIndex, GetDirectionOfButtonAt(x, y));
+            int direction = GetDirectionOfButtonAt(x, y);
+            if (direction == -1)
+                return;
+
+            m_decisionMaster.Move(m_userIndex, direction);
         }
 
         foreach (Touch touch in Input.touches)
@@ -50,7 +54,11 @@ public class PlayerTouchInput : MonoBehaviour {
             float x = touch.position.x;
             float y = touch.position.y;
 
-            m_decisionMaster.Move(m_userIndex, GetDirectionOfButtonAt(x, y));
+            int direction = GetDirectionOfButtonAt(x, y);
+            if (direction == -1)
+                return;
+
+            m_decisionMaster.Move(m_userIndex, direction);
         }
 
     }
@@ -78,13 +86,22 @@ public class PlayerTouchInput : MonoBehaviour {
     private GameObject GetButtonClicked(float x, float y)
     {
         if (IsButtonCollision(x, y, m_buttonLeft))
+        { 
+            Debug.Log((m_isPlayerOne ? "player 1" : "player 2") + " button left");
             return m_buttonLeft;
+        }
 
         if (IsButtonCollision(x, y, m_buttonRight))
+        {
+            Debug.Log((m_isPlayerOne ? "player 1" : "player 2") + " button right");
             return m_buttonRight;
+        }
 
         if (IsButtonCollision(x, y, m_buttonUp))
+        {
+            Debug.Log((m_isPlayerOne ? "player 1" : "player 2") + " button up");
             return m_buttonUp;
+        }
 
         return null;
     }
