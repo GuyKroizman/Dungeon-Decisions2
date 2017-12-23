@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// A UI GameObject that represent a ui progress bar.
+/// The progress bar is comprissed of a few rows of another prefab we call here "part"
+/// </summary>
 public class Progressbar : MonoBehaviour {
 
 
@@ -40,9 +44,11 @@ public class Progressbar : MonoBehaviour {
         }
 
     }
+    
 
     void Start ()
     {
+        transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform);
 
         m_componentTransform = GetComponent<Transform>();
 
@@ -64,6 +70,8 @@ public class Progressbar : MonoBehaviour {
                 Destroy(cubeLeft, enumerator.Current);
 
             }
+
+        Destroy(this.gameObject, m_timeSeconds);
 
     }
 
@@ -95,8 +103,5 @@ public class Progressbar : MonoBehaviour {
             m_componentTransform);        
     }
 	
-	
-	void Update () {
-		
-	}
+
 }

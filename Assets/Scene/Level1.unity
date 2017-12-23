@@ -2879,7 +2879,7 @@ GameObject:
   - component: {fileID: 553902947}
   m_Layer: 5
   m_Name: Canvas
-  m_TagString: Untagged
+  m_TagString: Canvas
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2958,7 +2958,6 @@ RectTransform:
   - {fileID: 586355951}
   - {fileID: 709600440}
   - {fileID: 1563369012}
-  - {fileID: 1112267677}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3635,52 +3634,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!1 &1112267676
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1112267677}
-  - component: {fileID: 1112267678}
-  m_Layer: 5
-  m_Name: Progressbar
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1112267677
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1112267676}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 553902950}
-  m_RootOrder: 8
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0}
-  m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 191}
-  m_SizeDelta: {x: 422.01, y: 40}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1112267678
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1112267676}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29aa9847f15928841be582ee3ac76f0f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_part: {fileID: 1786420405669978, guid: cc334ab938e416149b7a1a889d237660, type: 2}
 --- !u!1 &1135617782
 GameObject:
   m_ObjectHideFlags: 0
@@ -4032,6 +3985,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5aa981138af21c24daf071ee384f1bf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_progressbar: {fileID: 1581149386560186, guid: 959703e1217b8de489ebcc3987d8ab1b,
+    type: 2}
 --- !u!54 &1386148630
 Rigidbody:
   m_ObjectHideFlags: 0

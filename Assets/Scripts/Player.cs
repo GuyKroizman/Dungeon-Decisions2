@@ -98,18 +98,54 @@ public class Player : MonoBehaviour
         
     }
 
+    /// <summary>
+    /// Used to detect when a the player stopped moving
+    /// </summary>
+    class EndMotionDetector
+    {        
+        Vector3 m_position;
+        Quaternion m_rotation;
+
+        /// <summary>
+        /// Detect if there is no change between the provided position and rotation to the previous position and rotation.
+        /// Because if there is not change that means the player is not moving.
+        /// </summary>
+        /// <param name="newPosition"></param>
+        /// <param name="newRotation"></param>
+        /// <returns></returns>
+        internal bool IsMotionEnded(Vector3 newPosition, Quaternion newRotation)
+        {
+            if (newPosition == m_position || newRotation == m_rotation)
+                return true;
+
+            m_position = newPosition;
+            m_rotation = newRotation;
+
+            return false;
+        }
+    }
+
+    // This variable has a life cycle in which it is initiated once the player start a Move (Be it rotate or a forward)
+    // and it is deleted once the move ended and then the variable is set to null.
+    EndMotionDetector m_endMotionDetector;
+
     Direction m_direction;
 
     Rigidbody m_rigidbody;
 
-    MoveForward m_move_forward;
+    MoveForward m_moveForward;
 
+    public GameObject m_progressbar;
+
+    private float m_turningSpeed = 175f;
 
     void Start()
-    {
+    {        
         m_rigidbody = GetComponent<Rigidbody>();
 
-        m_move_forward = new MoveForward(m_rigidbody.transform);
+        m_endMotionDetector = new EndMotionDetector();
+
+        m_moveForward = new MoveForward(m_rigidbody.transform);
 
         m_direction = new Direction();        
     }
@@ -117,10 +153,20 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float turningSpeed = 175.0f;
-        RotateToDestination(m_direction.getDirection(), turningSpeed);
+        RotateToDestination(m_direction.getDirection(), m_turningSpeed);
 
-        m_move_forward.Update();
+        m_moveForward.Update();
+
+        // detect player end movement.
+        if(m_endMotionDetector != null &&
+            m_endMotionDetector.IsMotionEnded(m_rigidbody.transform.position, m_rigidbody.transform.rotation))
+        {
+
+            // the variable is not null once the player started moving and once the movement ended the variable must 
+            // be set to null again
+            m_endMotionDetector = null;
+            Instantiate(m_progressbar, new Vector3(Screen.width/2, Screen.height / 4, 0), Quaternion.identity);
+        }
     }
 
     /// <summary>
@@ -148,18 +194,23 @@ public class Player : MonoBehaviour
     {
         if (direction == 0)
         {
-            if(!IsThereAWallAhead())
-                m_move_forward.Start();
+            if (!IsThereAWallAhead())
+            {
+                m_moveForward.Start();
+                m_endMotionDetector = new EndMotionDetector();
+            }                
         }
 
         if (direction == 1)
         {
-            m_direction.TurnLeft();                      
+            m_direction.TurnLeft();
+            m_endMotionDetector = new EndMotionDetector();
         }
 
         if (direction == 2)
         {
-            m_direction.TurnRight();            
+            m_direction.TurnRight();
+            m_endMotionDetector = new EndMotionDetector();
         }        
     }
 
