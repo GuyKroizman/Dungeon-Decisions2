@@ -8,6 +8,6 @@ public class LevelEnd : MonoBehaviour {
 
     public void OnTriggerEnter(Collider other)
     {
-        Debug.Log("?????????????? on collision.");
+        UnityEngine.SceneManagement.SceneManager.LoadScene(m_levelToLoad);
     }
 }

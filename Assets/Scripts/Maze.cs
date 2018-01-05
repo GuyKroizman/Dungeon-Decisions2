@@ -3,7 +3,8 @@ using System.Collections;
 using System.Threading;
 using UnityEngine;
 
-public class Maze : MonoBehaviour {
+public class Maze : MonoBehaviour
+{
 
     // bricks are initiated one next to another to create the maze wall.
     public GameObject m_brick;
@@ -86,8 +87,9 @@ public class Maze : MonoBehaviour {
         }
     }
 
-    public void Init () {
-        
+    public void Init()
+    {
+
         Vector3 floorSize = m_floor.transform.localScale;
 
         // the center of the floor is 0,0 (and not some corner as some might expect)
@@ -103,9 +105,72 @@ public class Maze : MonoBehaviour {
     // TODO: pass a variable holding the level
     public IEnumerator CreateMazeInnerLayoutForLevel()
     {
-        
-        int [,] layout = new int[,]
+
+        var currentScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
+
+        int[,] layout = { };
+
+        if (currentScene.name == "Level1")
+            layout = GetLevel1Layout();
+
+        if (currentScene.name == "Level2")
+            layout = GetLevel2Layout();
+
+        for (int x = (int)minX; x < maxX; x++)
         {
+            if (x + Math.Abs(minX) > layout.GetLength(0))
+                continue;
+
+            for (int z = (int)minZ; z < maxZ; z++)
+            {
+                if (z + Math.Abs(minZ) > layout.GetLength(1))
+                    continue;
+
+                if (layout[x + (int)Math.Abs(minX), z + (int)Math.Abs(minZ)] == 1)
+                {
+                    PutBrick(x, z);
+                    yield return new WaitForSeconds(0.3f);
+                }
+
+            }
+        }
+    }
+
+    private static int[,] GetLevel2Layout()
+    {
+        return new int[,]
+                {
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
+                };
+    }
+
+    private static int[,] GetLevel1Layout()
+    {
+        return new int[,]
+                {
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
             {0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0 },
@@ -130,26 +195,6 @@ public class Maze : MonoBehaviour {
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0 },
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0 },
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
-        };
-
-        for(int x = (int)minX; x < maxX; x++)
-        {
-            if (x + Math.Abs(minX)> layout.GetLength(0))
-                continue;
-
-            for (int z = (int)minZ; z<maxZ; z++)
-            {
-                if (z + Math.Abs(minZ) > layout.GetLength(1))
-                    continue;
-
-                if (layout[x + (int)Math.Abs(minX), z + (int)Math.Abs(minZ)] == 1)
-                {
-                    PutBrick(x, z);
-                    yield return new WaitForSeconds(0.3f);
-                }
-                
-            }
-        }
+                };
     }
-
 }

@@ -25,8 +25,6 @@ public class GameManager : MonoBehaviour {
             return;
         }
 
-        DontDestroyOnLoad(gameObject);
-
         floorClone = Instantiate(floor);
 
         maze = Instantiate(maze);
