@@ -8,6 +8,11 @@ public class LevelEnd : MonoBehaviour {
 
     public void OnTriggerEnter(Collider other)
     {
+        if(m_levelToLoad == "GameOver")
+        {
+            Debug.Log("Game Over");
+            return;
+        }
         UnityEngine.SceneManagement.SceneManager.LoadScene(m_levelToLoad);
     }
 }

@@ -8,10 +8,8 @@ public class GameManager : MonoBehaviour {
     // Singleton
     public static GameManager instance = null;
 
-    public GameObject floor;
-    GameObject floorClone;
+    public GameObject m_floor;
 
-    // when this (GameManager) is instantiated from Loader, the maze also gets instantiated.
     public Maze maze;
 
     void Awake () {
@@ -24,17 +22,15 @@ public class GameManager : MonoBehaviour {
             Destroy(gameObject);
             return;
         }
-
-        floorClone = Instantiate(floor);
-
-        maze = Instantiate(maze);
-
-        maze.SetFloor(floorClone);
-        maze.Init();
     }
 
     private void Start()
     {
+
+        maze = Instantiate(maze);
+
+        maze.Init();
+
         StartCoroutine(maze.CreateMazeInnerLayoutForLevel());
     }
     
