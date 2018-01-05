@@ -19,7 +19,7 @@ PlayerSettings:
   m_ShowUnitySplashLogo: 1
   m_SplashScreenOverlayOpacity: 1
   m_SplashScreenAnimation: 1
-  m_SplashScreenLogoStyle: 1
+  m_SplashScreenLogoStyle: 0
   m_SplashScreenDrawMode: 0
   m_SplashScreenBackgroundAnimationZoom: 1
   m_SplashScreenLogoAnimationZoom: 1
@@ -120,14 +120,14 @@ PlayerSettings:
     16:9: 1
     Others: 1
   bundleIdentifier: com.GuyKroizman.DungeonDecisions2
-  bundleVersion: 0.15
+  bundleVersion: 0.16
   preloadedAssets: []
   metroInputSource: 0
   m_HolographicPauseOnTrackingLoss: 1
   xboxOneDisableKinectGpuReservation: 0
   protectGraphicsMemory: 0
   useHDRDisplay: 0
-  AndroidBundleVersionCode: 7
+  AndroidBundleVersionCode: 8
   AndroidMinSdkVersion: 9
   AndroidPreferredInstallLocation: 1
   aotOptions: 
@@ -214,7 +214,7 @@ PlayerSettings:
   - m_BuildTarget: 
     m_Icons:
     - serializedVersion: 2
-      m_Icon: {fileID: 2800000, guid: 0c8b1c60ed70a2f41af2e01ae2d9b6f0, type: 3}
+      m_Icon: {fileID: 2800000, guid: 7c8f39da04e498141a7e251e5c1a3338, type: 3}
       m_Width: 128
       m_Height: 128
   m_BuildTargetBatching: []

@@ -194,7 +194,7 @@ public class Player : MonoBehaviour
     {
         if (direction == 0)
         {
-            if (!IsThereAWallAhead())
+            if (!IsPossibleToMoveForward())
             {
                 m_moveForward.Start();
                 m_endMotionDetector = new EndMotionDetector();
@@ -214,10 +214,22 @@ public class Player : MonoBehaviour
         }        
     }
 
-    private bool IsThereAWallAhead()
+    /// <summary>
+    /// cast a ray forward to detect if the player can move forward.
+    /// 
+    /// </summary>
+    /// <returns>bool</returns>
+    private bool IsPossibleToMoveForward()
     {
-        RaycastHit hit;
-        return Physics.Raycast(transform.position, Camera.main.transform.forward, out hit, 0.5f);
+        RaycastHit hitInfo;
+        bool isHit = Physics.Raycast(transform.position, Camera.main.transform.forward, out hitInfo, 0.5f);
+
+        if (!isHit)
+            return false;
+
+        // if we hit something but it does not have a rigid body then there is no problem going there.
+        return hitInfo.rigidbody != null;
+        
     }
 
 
