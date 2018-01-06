@@ -115,7 +115,7 @@ public class Player : MonoBehaviour
         /// <returns></returns>
         internal bool IsMotionEnded(Vector3 newPosition, Quaternion newRotation)
         {
-            if (newPosition == m_position || newRotation == m_rotation)
+            if (newPosition == m_position && newRotation == m_rotation)
                 return true;
 
             m_position = newPosition;
@@ -136,6 +136,7 @@ public class Player : MonoBehaviour
     MoveForward m_moveForward;
 
     public GameObject m_progressbar;
+    private GameObject m_progressbarCloned;
 
     private float m_turningSpeed = 175f;
 
@@ -165,7 +166,7 @@ public class Player : MonoBehaviour
             // the variable is not null once the player started moving and once the movement ended the variable must 
             // be set to null again
             m_endMotionDetector = null;
-            Instantiate(m_progressbar, new Vector3(Screen.width/2, Screen.height / 4, 0), Quaternion.identity);
+            m_progressbarCloned = Instantiate(m_progressbar, new Vector3(Screen.width/2, Screen.height / 4, 0), Quaternion.identity);
         }
     }
 
@@ -196,6 +197,8 @@ public class Player : MonoBehaviour
         {
             if (!IsPossibleToMoveForward())
             {
+                
+                Destroy(m_progressbarCloned);
                 m_moveForward.Start();
                 m_endMotionDetector = new EndMotionDetector();
             }                
@@ -203,12 +206,14 @@ public class Player : MonoBehaviour
 
         if (direction == 1)
         {
+            Destroy(m_progressbarCloned);
             m_direction.TurnLeft();
             m_endMotionDetector = new EndMotionDetector();
         }
 
         if (direction == 2)
         {
+            Destroy(m_progressbarCloned);
             m_direction.TurnRight();
             m_endMotionDetector = new EndMotionDetector();
         }        
