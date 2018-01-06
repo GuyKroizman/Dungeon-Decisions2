@@ -19,6 +19,8 @@ public class DecisionMaster : MonoBehaviour {
     // that into account in the logic below. need to be fixed.
     public float m_usersTurnDurationSeconds;
 
+    private AudioSource m_audioSource;
+
     BallotBox m_ballotBox;
 
     private float m_timer = 0;
@@ -89,6 +91,11 @@ public class DecisionMaster : MonoBehaviour {
         }
     }
 
+    public void Awake()
+    {
+        m_audioSource = GetComponent<AudioSource>();    
+    }
+
     private void Start()
     {
         m_ballotBox = new BallotBox();
@@ -112,6 +119,7 @@ public class DecisionMaster : MonoBehaviour {
             if (m_ballotBox.IsTwoUsersVotedToMoveInTheSameDirection())
             {
                 MovePlayer(m_ballotBox.GetFinalDirection());
+                m_audioSource.Play();
                 Debug.Log("Synergy!");
             }
             else
