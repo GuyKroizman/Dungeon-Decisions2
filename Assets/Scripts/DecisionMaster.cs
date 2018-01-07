@@ -19,6 +19,12 @@ public class DecisionMaster : MonoBehaviour {
     // that into account in the logic below. need to be fixed.
     public float m_usersTurnDurationSeconds;
 
+    private bool m_levelEnded = false;
+    internal void EndLevelStop()
+    {
+        m_levelEnded = true;
+    }
+
     private AudioSource m_audioSource;
 
     BallotBox m_ballotBox;
@@ -102,6 +108,9 @@ public class DecisionMaster : MonoBehaviour {
     }
 
     void Update () {
+        if (m_levelEnded)
+            return;
+
         m_timer += Time.deltaTime;
         m_ballotBox.UpdateTime();
 
