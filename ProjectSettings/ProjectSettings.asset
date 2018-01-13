@@ -120,14 +120,14 @@ PlayerSettings:
     16:9: 1
     Others: 1
   bundleIdentifier: com.GuyKroizman.DungeonDecisions2
-  bundleVersion: 0.18
+  bundleVersion: 0.19
   preloadedAssets: []
   metroInputSource: 0
   m_HolographicPauseOnTrackingLoss: 1
   xboxOneDisableKinectGpuReservation: 0
   protectGraphicsMemory: 0
   useHDRDisplay: 0
-  AndroidBundleVersionCode: 10
+  AndroidBundleVersionCode: 11
   AndroidMinSdkVersion: 9
   AndroidPreferredInstallLocation: 1
   aotOptions: 

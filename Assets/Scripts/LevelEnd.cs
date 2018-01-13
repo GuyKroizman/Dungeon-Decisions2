@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LevelEnd : MonoBehaviour {
 
@@ -19,6 +20,14 @@ public class LevelEnd : MonoBehaviour {
     public void OnTriggerEnter(Collider other)
     {
         m_canvasEndLevel.GetComponent<Canvas>().enabled = true;
+
+        Text text = m_canvasEndLevel.GetComponentInChildren<Text>();
+
+        var stats = m_decisionMaster.GetStats();
+
+        text.text = string.Format("Score:\nSynergy {0}\nTimeout {1}\nIndecision {2}", stats.SynergyCount, stats.TurnTimeoutCount, stats.IndecisionCount);
+        
+
         m_decisionMaster.EndLevelStop();
         m_levelEnded = true;
     
@@ -34,8 +43,9 @@ public class LevelEnd : MonoBehaviour {
                 return;
             }
 
-            if (Input.GetKeyDown("space"))
+            if (Input.anyKey ||  Input.touchCount > 0)
             {
+                m_canvasEndLevel.GetComponent<Canvas>().enabled = false;
                 UnityEngine.SceneManagement.SceneManager.LoadScene(m_levelToLoad);
             }
         }

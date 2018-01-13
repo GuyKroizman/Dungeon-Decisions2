@@ -219,6 +219,13 @@ public class Player : MonoBehaviour
         }        
     }
 
+    public void EndLevelStop()
+    {
+        // hide (make not show) the progress bar.
+        m_endMotionDetector = null;
+        Destroy(m_progressbarCloned);
+    }
+
     /// <summary>
     /// cast a ray forward to detect if the player can move forward.
     /// 

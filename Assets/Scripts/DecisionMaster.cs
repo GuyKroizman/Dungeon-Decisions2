@@ -19,10 +19,16 @@ public class DecisionMaster : MonoBehaviour {
     // that into account in the logic below. need to be fixed.
     public float m_usersTurnDurationSeconds;
 
+    internal Stats GetStats()
+    {
+        return m_stats;
+    }
+
     private bool m_levelEnded = false;
     internal void EndLevelStop()
     {
         m_levelEnded = true;
+        m_player.EndLevelStop();
     }
 
     private AudioSource m_audioSource;
@@ -97,6 +103,15 @@ public class DecisionMaster : MonoBehaviour {
         }
     }
 
+    public class Stats
+    {
+        public int SynergyCount { get; set; }
+        public int TurnTimeoutCount { get; set; }
+        public int IndecisionCount { get; set; }
+    }
+
+    Stats m_stats = new Stats();
+
     public void Awake()
     {
         m_audioSource = GetComponent<AudioSource>();    
@@ -118,6 +133,7 @@ public class DecisionMaster : MonoBehaviour {
         if(m_timer > m_usersTurnDurationSeconds)
         {
             // time is up and users did not decide anything or only one of the users decided.
+            m_stats.TurnTimeoutCount++;
             MovePlayer(GetRandomDirection());
             Debug.Log("Time is up.");
         }
@@ -127,12 +143,14 @@ public class DecisionMaster : MonoBehaviour {
 
             if (m_ballotBox.IsTwoUsersVotedToMoveInTheSameDirection())
             {
+                m_stats.SynergyCount++;
                 MovePlayer(m_ballotBox.GetFinalDirection());
                 m_audioSource.Play();
                 Debug.Log("Synergy!");
             }
             else
             {
+                m_stats.IndecisionCount++;
                 MovePlayer(GetRandomDirection());
                 Debug.Log("Indecision is your enemy.");
             }
