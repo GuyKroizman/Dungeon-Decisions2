@@ -13,6 +13,8 @@ using UnityEngine;
 public class DecisionMaster : MonoBehaviour {
 
     public Player m_player;
+    public AudioClip m_indecisionClip;
+    public AudioClip m_timeoutClip;
 
     // The time for each turn.
     // TODO: Note There is also the time it takes for the player to do its movement (turn or forward). But we don't take 
@@ -134,6 +136,7 @@ public class DecisionMaster : MonoBehaviour {
         {
             // time is up and users did not decide anything or only one of the users decided.
             m_stats.TurnTimeoutCount++;
+            m_audioSource.PlayOneShot(m_timeoutClip);
             MovePlayer(GetRandomDirection());
             Debug.Log("Time is up.");
         }
@@ -151,6 +154,7 @@ public class DecisionMaster : MonoBehaviour {
             else
             {
                 m_stats.IndecisionCount++;
+                m_audioSource.PlayOneShot(m_indecisionClip);
                 MovePlayer(GetRandomDirection());
                 Debug.Log("Indecision is your enemy.");
             }

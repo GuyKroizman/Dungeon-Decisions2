@@ -133,4 +133,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_player: {fileID: 0}
+  m_indecisionClip: {fileID: 8300000, guid: 8ff244609747e0943b119eb357ab3de0, type: 3}
+  m_timeoutClip: {fileID: 8300000, guid: 2b2db0b33c90a8540b847330841b3933, type: 3}
   m_usersTurnDurationSeconds: 4

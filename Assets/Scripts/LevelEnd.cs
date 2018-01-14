@@ -26,10 +26,14 @@ public class LevelEnd : MonoBehaviour {
         var stats = m_decisionMaster.GetStats();
 
         text.text = string.Format("Score:\nSynergy {0}\nTimeout {1}\nIndecision {2}", stats.SynergyCount, stats.TurnTimeoutCount, stats.IndecisionCount);
-        
+
+        // Hide the players controls ui
+        GameObject.Find("Canvas").GetComponent<Canvas>().GetComponent<Canvas>().enabled = false;
 
         m_decisionMaster.EndLevelStop();
         m_levelEnded = true;
+
+        GetComponent<AudioSource>().Play();
     
     }
 

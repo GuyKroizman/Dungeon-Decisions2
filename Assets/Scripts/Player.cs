@@ -224,6 +224,9 @@ public class Player : MonoBehaviour
         // hide (make not show) the progress bar.
         m_endMotionDetector = null;
         Destroy(m_progressbarCloned);
+
+        AudioSource audioSource = GetComponent<AudioSource>();
+        audioSource.Stop();
     }
 
     /// <summary>
